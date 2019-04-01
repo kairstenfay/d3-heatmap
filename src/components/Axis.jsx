@@ -14,11 +14,11 @@ export default class Axis extends React.Component {
 
         if (this.props.orient === 'bottom') {
             axis = d3.axisBottom(this.props.scale)
-                //.tickFormat(d3.timeFormat("%Y"));
+                .tickFormat(d3.timeFormat("%Y"));
 
         } else {
             axis = d3.axisLeft(this.props.scale)
-                .tickFormat(d3.timeFormat("%M:%S"));
+                .tickFormat(d3.timeFormat("%b"));
         }
 
         d3.select(node).call(axis);
