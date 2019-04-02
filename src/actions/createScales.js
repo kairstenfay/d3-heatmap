@@ -1,31 +1,31 @@
 import {scaleTime} from "d3-scale";
 import * as d3 from "d3";
 const parseYear = d3.timeParse("%Y");
-const parseTime = d3.timeParse("%M:%S");
+const parseMonth = d3.timeParse("%m");
 
 const xMax   = (data)  => {
-    return d3.max(data, (d) => d.year); // d.getFullyear());
+    return d3.max(data, (d) => d.year);
 };
 
 const xMin = (data) => {
-    return d3.min(data, (d) => d.year); // getFullyear());
+    return d3.min(data, (d) => d.year);
 };
 
 const yMin   = (data)  => {
-    return d3.min(data, (d) => d.month); // d.getTime());
+    return d3.min(data, (d) => d.month);
 };
 
 const yMax   = (data)  => {
-    return d3.max(data, (d) => d.month); // d.getTime());
+    return d3.max(data, (d) => d.month);
 };
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
 const xScale = (props) => {
 
     let minX = xMin(props.data);
+    minX = (minX) ? parseYear(minX.getFullYear() - 1) : minX;
     console.log("min x = " + minX);
     console.log("max x = " + xMax(props.data));
-    // minX = (minX) ? parseYear(minX.getFullYear() - 1) : minX;
 
     return scaleTime()
         .domain([minX, xMax(props.data)])
@@ -35,14 +35,8 @@ const xScale = (props) => {
 // Returns a function that "scales" Y coordinates from the data to fit the chart
 const yScale = (props) => {
 
-    let minY = yMin(props.data);
-
-    // let minY = new Date(yMin(props.data)).getMinutes() + ':00';
-    // console.log(minY);
-    // minY = parseTime(minY);
-
     return scaleTime()
-        .domain([minY, yMax(props.data)])
+        .domain([yMin(props.data), yMax(props.data)])
         .range([props.height - props.padding, props.padding]);
 };
 

@@ -1,31 +1,34 @@
 import React from 'react';
 
-export default function DataCircles(props) {
+export default function DataRectangles(props) {
 
     return (
-        <g id="circle-garden" onMouseOver={props.toolTipAction} onMouseOut={props.toolTipAction}>
-            {props.data.map(renderCircles(props))}
+        <g id="rectangle-garden" onMouseOver={props.toolTipAction} onMouseOut={props.toolTipAction}>
+            {props.data.map(renderRectangles(props))}
         </g>
     );
 }
 
-function renderCircles(props) {
+function renderRectangles(props) {
+
     return (coords, index) => {
 
-        const circleProps = {
-            cx: props.xScale(coords.Year),
-            cy: props.yScale(coords.Time),
-            r: 6,
+        const rectangleProps = {
+            x: props.xScale(coords.year),
+            y: props.yScale(coords.month),
+            width: 1,
+            height: 40,
             key: index,
         };
 
-        const fillColor = (coords.Doping === "") ? 'blue': 'red';  // todo config
+        index < 4 && (console.log(rectangleProps));
 
-        return <circle className="dot" data-xvalue={coords.Year}
-                       data-yvalue={coords.Time}  data-doping={coords.Doping}
-                        data-name={coords.Name} // todo: {...coords}
-                       {...circleProps} fill={fillColor}
-                       opacity="0.5" />;
+        const fillColor = 'red';  // todo config
+
+        return (
+            <rect data-xvalue={coords.year} data-yvalue={coords.month} // todo: {...coords}
+                       {...rectangleProps} fill={fillColor} />
+        );
     };
 }
 
